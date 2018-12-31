@@ -5,9 +5,12 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptor} from '../../_helper/AuthInterceptor';
 import {ErrorInterceptor} from '../../_helper/ErrorInterceptor';
 import {PrivateRoutingModule} from '../private-routing.module';
+import {PrivateLayoutComponent} from './private-layout.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    PrivateLayoutComponent
+  ],
   imports: [
     CommonModule,
     HttpClientModule,

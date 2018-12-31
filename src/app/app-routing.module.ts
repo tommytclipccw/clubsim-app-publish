@@ -1,19 +1,22 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PublicLayoutComponent } from './layout/public-layout/public-layout.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full',
-  }, {
-    path: '',
-    component: PublicLayoutComponent,
+    // component: PublicLayoutComponent,
     children: [
       {
         path: '',
         loadChildren: './layout/public-layout/public-layout.module#PublicLayoutModule'
+      }]
+  }, {
+    path: 'admin',
+    // component: PrivateLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: './layout/private-layout/private-layout.module#PrivateLayoutModule'
       }]
   },
   {
@@ -23,6 +26,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
+  declarations: [
+  ],
   imports: [RouterModule.forRoot(routes, {useHash: true})],
   exports: [RouterModule]
 })

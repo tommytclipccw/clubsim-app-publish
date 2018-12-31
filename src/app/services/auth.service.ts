@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {map} from 'rxjs/internal/operators';
 import {environment} from '../../environments/environment';
 import {LogUtil} from '../utils/LogUtil';
+import {EnvUtil} from '../utils/EnvUtil';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class AuthService {
   }
 
   login(username: string, password: string) {
-    return this.http.post(environment.endpoint + 'auth/authenticate', {'email': username, 'password': password}, {/*headers: {
+    return this.http.post( EnvUtil.api('auth/authenticate'), {'email': username, 'password': password}, {/*headers: {
         'Authorization': 'Basic ' + btoa(username + ':' + password)
       }*/}).pipe(map(data => {
         LogUtil.d(data);
@@ -42,7 +43,7 @@ export class AuthService {
   }
 
   refreshToken() {
-    return this.http.post(environment.endpoint + 'auth/refresh', {'token': AuthService.token}, {/*headers: {
+    return this.http.post(EnvUtil.api('auth/refresh'), {'token': AuthService.token}, {/*headers: {
         'Authorization': 'Basic ' + btoa(username + ':' + password)
       }*/}).pipe(map(data => {
       // LogUtil.d(user);

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MobileAppService} from '../../services/mobile-app.service';
+import {LogUtil} from '../../utils/LogUtil';
 
 @Component({
   selector: 'app-public-layout',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PublicLayoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(private mobileAppService: MobileAppService) { }
 
   ngOnInit() {
+    LogUtil.d('Test');
+    this.mobileAppService.getItems().subscribe(
+      data => {
+        LogUtil.d('message', data);
+      },
+      data => {
+      }
+    );
   }
 
 }
