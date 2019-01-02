@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    // this.authService.login('tommy.tc.li@pccw.com', '1234567890').subscribe(data => {
+    // this.authService.login('view@view.com', '1234567890').subscribe(data => {
     //   LogUtil.d(data);
     // },
     //   data => {

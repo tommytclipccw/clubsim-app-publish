@@ -1,0 +1,91 @@
+.items-container {
+  display: block;
+}
+.card:first-child{
+  box-shadow: 0 2px 2px 0 rgba(128, 0, 0, 0.50);
+}
+.card{
+  display: inline-block;
+  margin: 0.5%;
+  text-decoration: none;
+  color: initial;
+  font-family: monospace;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.17);
+  width: 45%;
+  padding: 10px 10px 10px 0px;
+  .banner {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: large;
+  }
+  .container {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+    .left {
+      float: left;
+      width: 80%;
+      padding-right: 10px;
+      box-sizing: border-box;
+      *:nth-child(2) {
+
+      }
+      .item-env {
+        font-weight: bold;
+        font-size: large;
+      }
+    }
+    .right {
+      float: right;
+      width: 20%;
+      * {
+        height: 100%;
+      }
+    }
+  }
+}
+.card:hover {
+  background: #eeeeee;
+}
+//.item-container {
+//  display: grid;
+//  padding: 10px;
+//  box-sizing: border-box;
+//  grid-template-areas:
+//  "a b"
+//  "c b"
+//  "d b";
+//  //*{
+//  //  grid-column: 1;
+//  //}
+//  //*:last-child{
+//  //  grid-column: 2;
+//  //  grid-row: 1 / span 3;
+//  //}
+//  .item-name {
+//    grid-area: a;
+//    display: inline-grid;
+//    grid-auto-rows: min-content;
+//  }
+//  .item-desc {
+//    grid-area: c;
+//    grid-auto-rows: max-content;
+//  }
+//  .item-release {
+//    grid-area: d;
+//    display: inline-grid;
+//    grid-auto-rows: min-content;
+//  }
+//  .item-link {
+//    grid-area: b;
+//    justify-self: end;
+//    grid-auto-rows: min-content;
+//  }
+//  .item-link {
+//    height: 150px;
+//  }
+//}

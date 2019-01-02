@@ -1,0 +1,32 @@
+<div class="items-container">
+  <a [href]="item.link" *ngFor="let item of list" class="card">
+    <div class="banner">
+      {{item.name}}
+    </div>
+    <div class="container">
+      <div class="left">
+        <div class="item-env">
+          {{item.environment}}
+        </div>
+        <div class="item-name">
+            {{item.version}} (build: {{item.buildNumber}})
+        </div>
+        <div class="item-desc">
+          <p>{{item.description}}</p>
+        </div>
+        <div class="item-release">
+          <!--<span>-->
+            {{item.releaseDatetime}}
+          <!--</span>-->
+        </div>
+      </div>
+      <div class="right">
+        <div class="item-link">
+          <!--<a [href]="item.link">-->
+            <qrcode [qrdata]="item.link" [size]="50" [level]="'L'" [usesvg]="true"></qrcode>
+          <!--</a>-->
+        </div>
+      </div>
+    </div>
+  </a>
+</div>
