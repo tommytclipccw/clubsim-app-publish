@@ -27,4 +27,8 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 
-TODO finish the routing
+## Setup FCM
+[Medium Reference](https://medium.com/@a.adendrata/push-notifications-with-angular-6-firebase-cloud-massaging-dbfb5fbc0eeb)
+1. `npm install firebase @angular/fire --save`
+2. Enable anonymous authentication in Firebase auth
+3. Enable Real-time database

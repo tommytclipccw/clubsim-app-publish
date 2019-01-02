@@ -4,6 +4,22 @@
 .card:first-child{
   box-shadow: 0 2px 2px 0 rgba(128, 0, 0, 0.50);
 }
+@media screen and (max-width: 767px) {
+  .card {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 767px) {
+  .card {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+@media screen and (min-width: 767px) {
+  .card {
+    width: 45%;
+  }
+}
 .card{
   display: inline-block;
   margin: 0.5%;
@@ -13,7 +29,6 @@
   background: white;
   border-radius: 5px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.17);
-  width: 45%;
   padding: 10px 10px 10px 0px;
   .banner {
     width: 100%;

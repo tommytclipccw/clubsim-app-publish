@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from './services/auth.service';
 import {LogUtil} from './utils/LogUtil';
+import {MessagingService} from './shared/messaging.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,8 @@ import {LogUtil} from './utils/LogUtil';
 })
 export class AppComponent implements OnInit {
   title = 'my-directus-client';
-  constructor(private authService: AuthService) {}
+  message;
+  constructor(private messagingService: MessagingService) {}
 
   ngOnInit(): void {
     // this.authService.login('view@view.com', '1234567890').subscribe(data => {
@@ -19,5 +21,9 @@ export class AppComponent implements OnInit {
     //   LogUtil.d(data);
     //   LogUtil.d('Dllm');
     // });
+    const userId = 'user001';
+    this.messagingService.requestPermission(userId)
+    this.messagingService.receiveMessage()
+    this.message = this.messagingService.currentMessage;
   }
 }
