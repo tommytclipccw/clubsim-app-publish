@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  endpoint: 'http://13.113.165.41:8081/_/',
+  endpoint: 'http://www.tommyltc.com/_/',
   firebase: {
     apiKey: 'AIzaSyD4K_HT0mYdkBsFgtFh9yoNQdJlplFAYwo',
     authDomain: 'clubsim-tools.firebaseapp.com',

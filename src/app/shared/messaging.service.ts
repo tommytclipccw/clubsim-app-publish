@@ -4,6 +4,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireMessaging } from '@angular/fire/messaging';
 import { take } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import {LogUtil} from '../utils/LogUtil';
+import {ClientService} from '../services/client.service';
 
 @Injectable()
 export class MessagingService {
@@ -13,7 +15,8 @@ export class MessagingService {
   constructor(
     private angularFireDB: AngularFireDatabase,
     private angularFireAuth: AngularFireAuth,
-    private angularFireMessaging: AngularFireMessaging) {
+    private angularFireMessaging: AngularFireMessaging,
+    private clientService: ClientService) {
     this.angularFireMessaging.messaging.subscribe(
       (_messaging) => {
         _messaging.onMessage = _messaging.onMessage.bind(_messaging);
@@ -29,13 +32,16 @@ export class MessagingService {
    * @param token token as a value
    */
   updateToken(userId, token) {
+    LogUtil.d(userId, token);
+    this.clientService.finishSubscription(userId, token, () => {
+    });
     // we can change this function to request our backend service
-    this.angularFireAuth.authState.pipe(take(1)).subscribe(
-      () => {
-        const data = {};
-        data[userId] = token;
-        this.angularFireDB.object('fcmTokens/').update(data);
-      });
+    // this.angularFireAuth.authState.pipe(take(1)).subscribe(
+    //   () => {
+    //     const data = {};
+    //     data[userId] = token;
+    //     this.angularFireDB.object('fcmTokens/').update(data);
+    //   });
   }
 
   /**
@@ -47,7 +53,9 @@ export class MessagingService {
     this.angularFireMessaging.requestToken.subscribe(
       (token) => {
         console.log(token);
-        this.updateToken(userId, token);
+        if (ClientService.client.client_key !== token) {
+          this.updateToken(userId, token);
+        }
       },
       (err) => {
         console.error('Unable to get permission to notify.', err);

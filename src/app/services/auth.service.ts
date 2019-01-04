@@ -1,9 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {map} from 'rxjs/internal/operators';
-import {environment} from '../../environments/environment';
 import {LogUtil} from '../utils/LogUtil';
 import {EnvUtil} from '../utils/EnvUtil';
+import {ItemResponse} from './model/ItemResponse';
+
+export class UserInfo {
+  id: number;
+  status: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  token: object;
+  timezone: string;
+  locale: string;
+  locale_options: object;
+  avatar: object;
+  company: object;
+  title: object;
+  email_notifications: boolean;
+  last_access_on: string;
+  last_page: string;
+  external_id: object;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +43,13 @@ export class AuthService {
   checkAuth(): string {
     console.log(localStorage.getItem('userAuth'));
     return localStorage.getItem('userAuth');
+  }
+
+  me() {
+    return this.http.get<ItemResponse<UserInfo>>(EnvUtil.api('users/me')).pipe(map(data => {
+      LogUtil.d(data);
+      return data;
+    }));
   }
 
   login(username: string, password: string) {
