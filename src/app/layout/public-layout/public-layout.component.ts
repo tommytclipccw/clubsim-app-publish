@@ -1,9 +1,10 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, Input} from '@angular/core';
 import {MobileAppService} from '../../services/mobile-app.service';
 import {LogUtil} from '../../utils/LogUtil';
 import {MobileAppResponse} from '../../services/model/MobileAppResponse';
 import {FileService} from '../../services/file.service';
 import {QrLinkData} from '../../components/listing/qr-link-listview/qr-link-listview.component';
+import {ClientService} from '../../services/client.service';
 
 @Component({
   selector: 'app-public-layout',
@@ -14,9 +15,13 @@ export class PublicLayoutComponent implements OnInit {
 
   items: MobileAppResponse;
   list: QrLinkData[] = null;
-  constructor(private mobileAppService: MobileAppService, private fileService: FileService) { }
+  @Input() fcm_subscription = false;
+  fcm_token = '';
+  constructor(private mobileAppService: MobileAppService, private fileService: FileService, private clientService: ClientService) { }
 
   ngOnInit() {
+    this.fcm_token = localStorage.getItem('deviceToken');
+    this.fcm_subscription = localStorage.getItem('deviceToken') !== '';
     LogUtil.d('Test');
     this.mobileAppService.getItems().subscribe(
       (values) => {
@@ -36,7 +41,7 @@ export class PublicLayoutComponent implements OnInit {
               if (file.data.data) {
                 this.items.data[i].uploaded_file_url = file.data.data.full_url;
               }
-              for ( let j = 0; j < 10; j++) {
+              // for ( let j = 0; j < 10; j++) {
                 this.list.push({
                   name: this.items.data[i].app_name,
                   version: this.items.data[i].version,
@@ -46,7 +51,7 @@ export class PublicLayoutComponent implements OnInit {
                   link: this.items.data[i].uploaded_file_url,
                   releaseDatetime: this.items.data[i].created_on
                 });
-              }
+              // }
             });
           });
         // }
@@ -54,6 +59,18 @@ export class PublicLayoutComponent implements OnInit {
       data => {
       }
     );
+  }
+
+  pushNotificationChange(result: boolean) {
+    this.fcm_subscription = result;
+    const deviceId = Number(localStorage.getItem('deviceId'));
+    if (deviceId) {
+      this.clientService.update(deviceId, this.fcm_subscription ? 'published' : 'draft').subscribe(data => {
+      }, error => {
+        this.fcm_subscription = !this.fcm_subscription;
+      });
+    }
+    LogUtil.d('Changed', this.fcm_subscription);
   }
 
 }

@@ -45,14 +45,18 @@ export class ClientService {
   }
 
   finishSubscription(id, token, callback) {
-    this.update(id, token).subscribe(
-      obj => {
-        ClientService.client = obj.data;
-        localStorage.setItem('deviceId', obj.data.id.toString());
-        localStorage.setItem('deviceToken', obj.data.client_key);
-        callback();
-      }
-    );
+    this.update(id, token).subscribe(data => {
+      LogUtil.d('update');
+      LogUtil.d(data);
+      localStorage.setItem('deviceToken', data.data.client_key);
+      this.subscription(id).subscribe(
+        obj => {
+          ClientService.client = obj.data;
+          localStorage.setItem('deviceId', obj.data.id.toString());
+          callback();
+        }
+      );
+    });
   }
 
   private create(): Observable<ItemResponse<ClientListModel>> {
@@ -66,15 +70,37 @@ export class ClientService {
       }));
   }
 
-  private update(id: number, client_key: string): Observable<ItemResponse<ClientListModel>>  {
+  private updateClientKey(id: number, client_key: string): Observable<ItemResponse<ClientListModel>> {
     return this.http.patch <ItemResponse<ClientListModel>> (
       EnvUtil.api('items/client/' + id),
-      {'status': 'published', 'client_key': client_key},
+      {'client_key': client_key},
+      {}
+    ).pipe(map(e => {
+      LogUtil.d('update', e);
+      return e;
+    }));
+  }
+
+  private subscription(id: number): Observable<ItemResponse<ClientListModel>>  {
+    return this.http.patch <ItemResponse<ClientListModel>> (
+      EnvUtil.api('items/client/' + id),
+      {'status': 'published'},
       {}
       ).pipe(map(e => {
         LogUtil.d('update', e);
         return e;
       }));
+  }
+
+  update(id: number, client_key: string): Observable<ItemResponse<ClientListModel>>  {
+    return this.http.patch <ItemResponse<ClientListModel>> (
+      EnvUtil.api('items/client/' + id),
+      {'client_key': client_key},
+      {}
+    ).pipe(map(e => {
+      LogUtil.d('update', e);
+      return e;
+    }));
   }
 
   private get(id: number): Observable<ItemResponse<ClientListModel>>  {
