@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  endpoint: 'https://www.tommyltc.com/_/',
+  endpoint: 'https://localhost/_/',
   firebase: {
     apiKey: 'AIzaSyD4K_HT0mYdkBsFgtFh9yoNQdJlplFAYwo',
     authDomain: 'clubsim-tools.firebaseapp.com',
